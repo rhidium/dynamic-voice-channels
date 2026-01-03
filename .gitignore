@@ -1,0 +1,8 @@
+# Packages/dependencies
+/node_modules/
+
+# Build output
+/dist/
+
+# Client configuration files
+/config.json
