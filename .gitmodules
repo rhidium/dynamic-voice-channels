@@ -1,3 +1,4 @@
 [submodule "rhidium"]
 	path = rhidium
 	url = git@github.com:rhidium/rhidium.git
+	branch = mirasaki

@@ -1,0 +1,8 @@
+packages:
+  - './'
+  - 'rhidium'
+
+onlyBuiltDependencies:
+  - "@prisma/engines"
+  - "esbuild"
+  - "prisma"
