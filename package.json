@@ -1,6 +1,6 @@
 {
   "name": "dynamic-voice-channels",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-alpha.1",
   "description": "Discord bot for on-demand voice channel creation, built with Rhidium",
   "license": "ISC",
   "author": {
@@ -8,13 +8,17 @@
     "email": "me@mirasaki.dev",
     "url": "https://mirasaki.dev/"
   },
-  "packageManager": "pnpm@10.4.1",
   "type": "module",
   "main": "dist/index.js",
+  "packageManager": "pnpm@10.4.1",
   "scripts": {
+    "prebuild": "cd rhidium && pnpm run build && pnpm run db:generate",
     "build": "tsc",
-    "prebuild": "cd rhidium && pnpm run build && cd ../",
-    "dev": "tsx watch src/index.ts",
+    "clean": "git clean -xdf dist; rimraf rhidium/dist",
+    "clean:full": "pnpm run clean && rimraf rhidium/node_modules && git clean -xdf logs node_modules",
+    "cp:locales": "cd rhidium && pnpm run cp:locales ../locales",
+    "predev": "cd rhidium && pnpm run db:generate",
+    "dev": "concurrently -n \"rhidium,app\" -c \"cyan,green\" \"cd rhidium && pnpm run build:watch\" \"wait-on rhidium/dist/index.mjs && tsx watch --clear-screen=false src/index.ts\"",
     "start": "node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "typecheck": "tsc --noEmit",
@@ -29,7 +33,17 @@
     "rhidium": "workspace:^"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
+    "rimraf": "^6.1.2",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wait-on": "^9.0.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/engines",
+      "esbuild",
+      "prisma"
+    ]
   }
 }

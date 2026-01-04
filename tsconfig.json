@@ -6,6 +6,11 @@
     // File Layout
     "rootDir": "./src",
     "outDir": "./dist",
+    "baseUrl": "./rhidium",
+    "paths": {
+      "@core/*": ["./src/core/*"],
+      "@modules/*": ["./src/modules/*"]
+    },
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
@@ -17,6 +22,7 @@
 
     // JSON and other import settings
     "resolveJsonModule": true,
+    "resolvePackageJsonExports": true,
     "allowSyntheticDefaultImports": true,
 
     // Other Outputs
@@ -26,7 +32,7 @@
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
 
     // Style Options
     "noImplicitReturns": true,

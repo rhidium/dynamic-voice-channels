@@ -5,4 +5,14 @@
 /dist/
 
 # Client configuration files
-/config.json
+/config/config.json
+
+# Logs/Observability
+/logs/
+
+# Environment variable files
+.env
+.env.local
+.env.*.local
+*.envrc*
+!.env.example
