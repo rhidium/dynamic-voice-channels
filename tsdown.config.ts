@@ -50,6 +50,10 @@ export default defineConfig((options) => {
               logger.warn("Ignoring circular dependency warning from node_modules.");
               return;
             }
+            if (log.code === 'PLUGIN_TIMINGS') {
+              logger.warn(log.message);
+              return;
+            }
             throw new Error(`Build warning treated as error: ${log.message}`);
           } else {
             defaultHandler(level, log);
