@@ -1,0 +1,12 @@
+{
+  "client": {
+    "id": "your-bot-client-id-here",
+    "token": "your-bot-token-here",
+    "development_server_id": "your-development-server-id-here"
+  },
+  "permissions": {
+    "owner_id": "your-discord-user-id-here",
+    "system_administrator_ids": [],
+    "developer_ids": []
+  }
+}

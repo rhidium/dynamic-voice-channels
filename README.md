@@ -49,8 +49,8 @@ cp .env.example .env
 ```bash
 # Copy and edit the config files
 cp config/config.example.json config/config.json
-cp config/extended-config.example.json config/extended-config.json
-cp config/click-to-create.example.yaml config/click-to-create.yaml
+nano config/config.json
+nano click-to-create.yaml
 ```
 
 5. **Set up the database:**
