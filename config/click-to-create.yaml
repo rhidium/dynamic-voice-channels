@@ -1,0 +1,85 @@
+# Click-to-Create Voice Channels Configuration
+# This file defines trigger channels that automatically create temporary voice channels
+
+# YAML Anchor/Alias Guide for Reusable Permissions:
+# Define an anchor with &name on first use, then reference with *name anywhere after
+# Use merge keys (<<:) to copy and override specific fields
+
+# Note: This configuration is used to test the application, schema generation and validation.
+# You should remove or modify it according to your needs.
+- channelId: "1457366395825164494"
+  categoryId: "1222669266113921116"
+  maxChannels: 1
+  channelName: "{creator}'s Channel"
+  channelUserLimit: 0
+  channelBitrate: 64000
+  channelPermissions:
+    - &everyone-channel-perms
+      roleId: "@everyone"
+      allow:
+        - ViewChannel
+        - UseVAD
+        - Speak
+        - Stream
+        - UseSoundboard
+        - UseExternalSounds
+      deny:
+        - Connect
+    - &creator-channel-perms
+      roleId: "{{creatorId}}"
+      allow:
+        - Connect
+        - ViewChannel
+        - UseVAD
+        - Speak
+        - Stream
+        - UseSoundboard
+        - UseExternalSounds
+        - MoveMembers
+        - ManageChannels
+        - ManageRoles
+      deny: []
+    - &staff-channel-perms
+      roleId: "1222899875113472111"
+      allow:
+        - Connect
+        - ViewChannel
+        - UseVAD
+        - Speak
+        - Stream
+        - UseSoundboard
+        - UseExternalSounds
+        - MoveMembers
+        - ManageChannels
+        - ManageRoles
+        - MuteMembers
+        - DeafenMembers
+      deny: []
+
+# Example: Reuse the same permission structure in another config
+- channelId: "9876543210987654321"
+  categoryId: "1222669266113921117"
+  maxChannels: 5
+  channelName: "Private Room - {creator}"
+  channelUserLimit: 4
+  channelBitrate: 128000
+  channelPermissions:
+    - *creator-channel-perms   # Reuse creator permissions
+    - *staff-channel-perms     # Reuse staff permissions  
+    - *everyone-channel-perms  # Reuse everyone permissions
+
+# Example: Override specific values using merge keys
+# - channelId: "5555555555555555555"
+#   categoryId: "1222669266113921118"
+#   maxChannels: 3
+#   channelName: "Study Room - {creator}"
+#   channelUserLimit: 10
+#   channelBitrate: 64000
+#   channelPermissions:
+#     - *creator-channel-perms
+#     - *staff-channel-perms
+#     - <<: *everyone-channel-perms  # Start with everyone perms as base
+#       allow:               # Override just the allow list
+#         - Connect
+#         - ViewChannel
+#         # No speaking in study room!

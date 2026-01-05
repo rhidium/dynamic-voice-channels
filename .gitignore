@@ -16,3 +16,6 @@
 .env.*.local
 *.envrc*
 !.env.example
+
+# Prisma Client
+/generated/prisma

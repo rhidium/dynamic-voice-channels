@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client"
+  output = "../../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model DynamicVoiceChannel {
+  channelId         String   @id @unique               // The Discord channel ID
+  triggerChannelId  String                             // The trigger channel that created this VC
+  categoryId        String                             // The category where this VC was created
+  creatorId         String                             // The Discord user ID who created this channel
+  guildId           String                             // The guild this channel belongs to
+  createdAt         DateTime @default(now())           // When this channel was created
+
+  @@index([triggerChannelId])
+  @@index([guildId])
+  @@index([creatorId])
+}

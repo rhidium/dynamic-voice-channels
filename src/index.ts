@@ -1,13 +1,18 @@
 import { main } from 'rhidium/main'
 
-import utilityRegistry from 'rhidium/modules/utility';
-import systemRegistry from 'rhidium/modules/system';
-import moderationRegistry from 'rhidium/modules/moderation';
+import registry from './registry';
+import utilityRegistry from "rhidium/modules/utility";
+import { GatewayIntentBits } from 'discord.js';
 
 main({
   components: [
-    ...systemRegistry,
+    ...registry,
     ...utilityRegistry,
-    ...moderationRegistry,
-  ]
+  ],
+  clientOptions: {
+    intents: [
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildVoiceStates,
+    ]
+  }
 })

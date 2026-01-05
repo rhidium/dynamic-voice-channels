@@ -1,11 +1,23 @@
 {
   "cSpell.words": [
+    "autoincrement",
     "Blurple",
     "codepaths",
+    "cooldown's",
+    "cooldowns",
     "envrc",
     "esbuild",
+    "healthcheck",
+    "isready",
+    "pgbouncer",
     "Rhidium",
+    "Slowmode",
     "tailable",
+    "tsdown",
+    "unrepresentable",
     "Upserting"
-  ]
+  ],
+  "yaml.schemas": {
+    "./json-schemas/click-to-create.json": "config/click-to-create.yaml"
+  }
 }

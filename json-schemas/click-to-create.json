@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "channelId": {
+        "type": "string",
+        "pattern": "^\\d{18,20}$",
+        "description": "The channel ID that triggers VC creation when joined"
+      },
+      "categoryId": {
+        "type": "string",
+        "pattern": "^\\d{18,20}$",
+        "description": "The category where new VCs will be created"
+      },
+      "maxChannels": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 50,
+        "description": "Maximum number of channels that can be created"
+      },
+      "channelName": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Channel name format ({creator} will be replaced)"
+      },
+      "channelUserLimit": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1000,
+        "description": "User limit for created channels (0 = unlimited)"
+      },
+      "channelBitrate": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991,
+        "description": "Bitrate in Hz for created channels"
+      },
+      "channelPermissions": {
+        "minItems": 1,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "roleId": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^\\d{18,20}$"
+                },
+                {
+                  "type": "string",
+                  "const": "{{creatorId}}"
+                },
+                {
+                  "type": "string",
+                  "const": "@everyone"
+                }
+              ],
+              "description": "Role ID, {{creatorId}} placeholder, or @everyone"
+            },
+            "allow": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "CreateInstantInvite",
+                  "KickMembers",
+                  "BanMembers",
+                  "Administrator",
+                  "ManageChannels",
+                  "ManageGuild",
+                  "AddReactions",
+                  "ViewAuditLog",
+                  "PrioritySpeaker",
+                  "Stream",
+                  "ViewChannel",
+                  "SendMessages",
+                  "SendTTSMessages",
+                  "ManageMessages",
+                  "EmbedLinks",
+                  "AttachFiles",
+                  "ReadMessageHistory",
+                  "MentionEveryone",
+                  "UseExternalEmojis",
+                  "ViewGuildInsights",
+                  "Connect",
+                  "Speak",
+                  "MuteMembers",
+                  "DeafenMembers",
+                  "MoveMembers",
+                  "UseVAD",
+                  "ChangeNickname",
+                  "ManageNicknames",
+                  "ManageRoles",
+                  "ManageWebhooks",
+                  "ManageEmojisAndStickers",
+                  "ManageGuildExpressions",
+                  "UseApplicationCommands",
+                  "RequestToSpeak",
+                  "ManageEvents",
+                  "ManageThreads",
+                  "CreatePublicThreads",
+                  "CreatePrivateThreads",
+                  "UseExternalStickers",
+                  "SendMessagesInThreads",
+                  "UseEmbeddedActivities",
+                  "ModerateMembers",
+                  "ViewCreatorMonetizationAnalytics",
+                  "UseSoundboard",
+                  "CreateGuildExpressions",
+                  "CreateEvents",
+                  "UseExternalSounds",
+                  "SendVoiceMessages",
+                  "SendPolls",
+                  "UseExternalApps",
+                  "PinMessages",
+                  "BypassSlowmode"
+                ]
+              },
+              "description": "Allowed permission names (e.g., \"Connect\", \"Speak\", \"ViewChannel\")"
+            },
+            "deny": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "CreateInstantInvite",
+                  "KickMembers",
+                  "BanMembers",
+                  "Administrator",
+                  "ManageChannels",
+                  "ManageGuild",
+                  "AddReactions",
+                  "ViewAuditLog",
+                  "PrioritySpeaker",
+                  "Stream",
+                  "ViewChannel",
+                  "SendMessages",
+                  "SendTTSMessages",
+                  "ManageMessages",
+                  "EmbedLinks",
+                  "AttachFiles",
+                  "ReadMessageHistory",
+                  "MentionEveryone",
+                  "UseExternalEmojis",
+                  "ViewGuildInsights",
+                  "Connect",
+                  "Speak",
+                  "MuteMembers",
+                  "DeafenMembers",
+                  "MoveMembers",
+                  "UseVAD",
+                  "ChangeNickname",
+                  "ManageNicknames",
+                  "ManageRoles",
+                  "ManageWebhooks",
+                  "ManageEmojisAndStickers",
+                  "ManageGuildExpressions",
+                  "UseApplicationCommands",
+                  "RequestToSpeak",
+                  "ManageEvents",
+                  "ManageThreads",
+                  "CreatePublicThreads",
+                  "CreatePrivateThreads",
+                  "UseExternalStickers",
+                  "SendMessagesInThreads",
+                  "UseEmbeddedActivities",
+                  "ModerateMembers",
+                  "ViewCreatorMonetizationAnalytics",
+                  "UseSoundboard",
+                  "CreateGuildExpressions",
+                  "CreateEvents",
+                  "UseExternalSounds",
+                  "SendVoiceMessages",
+                  "SendPolls",
+                  "UseExternalApps",
+                  "PinMessages",
+                  "BypassSlowmode"
+                ]
+              },
+              "description": "Denied permission names (e.g., \"Connect\", \"Speak\", \"ViewChannel\")"
+            }
+          },
+          "required": [
+            "roleId",
+            "allow",
+            "deny"
+          ],
+          "additionalProperties": false
+        },
+        "description": "Permission overrides for created channels"
+      },
+      "manageRoles": {
+        "description": "Role IDs that can manage created channels (defaults to creator only)",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^\\d{18,20}$"
+        }
+      }
+    },
+    "required": [
+      "channelId",
+      "categoryId",
+      "maxChannels",
+      "channelName",
+      "channelUserLimit",
+      "channelBitrate",
+      "channelPermissions"
+    ],
+    "additionalProperties": false,
+    "description": "Click-to-create configuration"
+  },
+  "description": "Array of click-to-create configurations"
+}

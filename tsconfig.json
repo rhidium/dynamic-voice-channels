@@ -1,16 +1,12 @@
 {
   "include": ["src"],
-  "exclude": ["rhidium"],
+  "exclude": ["rhidium", "generated"],
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": "./src",
+    "rootDirs": ["./src", "./rhidium"],
     "outDir": "./dist",
     "baseUrl": "./rhidium",
-    "paths": {
-      "@core/*": ["./src/core/*"],
-      "@modules/*": ["./src/modules/*"]
-    },
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
@@ -33,6 +29,7 @@
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": false,
+    "noImplicitAny": true,
 
     // Style Options
     "noImplicitReturns": true,
