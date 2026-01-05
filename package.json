@@ -11,7 +11,7 @@
   "main": "dist/index.js",
   "packageManager": "pnpm@10.4.1",
   "scripts": {
-    "prebuild": "pnpm run db:generate && cd rhidium && pnpm run build && pnpm run db:generate",
+    "prebuild": "pnpm run db:generate && pnpm --filter rhidium run build && pnpm --filter rhidium run db:generate",
     "build": "tsdown",
     "clean": "git clean -xdf dist generated; rimraf rhidium/dist",
     "clean:full": "pnpm run clean && rimraf rhidium/node_modules && git clean -xdf logs node_modules",
