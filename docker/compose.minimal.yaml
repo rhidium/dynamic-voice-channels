@@ -1,0 +1,33 @@
+networks:
+  shared:
+    name: shared_services
+    external: true
+
+services:
+  client:
+    container_name: dvc-client
+    build:
+      context: ../
+      target: client
+      dockerfile: ./docker/Dockerfile
+      args:
+        - CI=true
+    restart: unless-stopped
+    env_file: ../.env
+    environment:
+      CI: true
+      NODE_ENV: production
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
+    volumes:
+      - ../logs:/app/logs:rw
+      - ../config/:/app/config:r
+      # Note: Prisma is included as a volume to allow for database migrations without having to rebuild the client container
+      - ../prisma:/app/prisma:r
+      - ../prisma.config.ts:/app/prisma.config.ts:r
+    networks:
+      - shared_services

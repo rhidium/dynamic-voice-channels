@@ -22,9 +22,11 @@ The following information is for people looking to contribute to the project.
 │   ├── schema/          # Validation & schemas
 │   └── voice-state/     # Voice channel logic
 ├── rhidium/             # Git submodule (framework)
-├── docker-entrypoint.sh # Docker startup script
-├── Dockerfile           # Multi-stage build config
-└── compose.yaml         # Docker Compose orchestration
+├── docker/              # Docker (compose) configuration
+│   ├── compose.yaml     # Docker Compose orchestration
+│   ├── Dockerfile       # Multi-stage build config
+│   └── entrypoint.sh    # Docker startup script
+├── Makefile             # Common command shortcuts
 ```
 
 ## Tools & Frameworks
