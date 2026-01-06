@@ -89,12 +89,6 @@ docker compose logs -f client
 docker compose down
 ```
 
-The Docker setup includes:
-- PostgreSQL database with health checks
-- Automatic database migrations on startup
-- Volume persistence for logs and data
-- Production-optimized Node.js container
-
 ## Configuration
 
 ### Environment Variables
