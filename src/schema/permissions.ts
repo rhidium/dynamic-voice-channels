@@ -2,6 +2,11 @@ import { PermissionFlagsBits } from "discord.js";
 import z from "zod/v4";
 import { discordIdOrPlaceholderOrEveryone } from "./schemas.common";
 
+const roleTargetSchema = z.union([
+  discordIdOrPlaceholderOrEveryone,
+  z.array(discordIdOrPlaceholderOrEveryone).min(1),
+]);
+
 // Permission name to bigint mapping
 const permissionBitMap: Record<string, bigint> = Object.entries(PermissionFlagsBits)
   .filter(([, value]) => typeof value === 'bigint')
@@ -22,7 +27,7 @@ const permissionNameEnum = z.enum(validPermissionNames as [string, ...string[]])
 // Helper to create channel permission schema with different permission types
 const createChannelPermissionSchema = <T extends z.ZodTypeAny>(permSchema: T) => 
   z.object({
-    roleId: discordIdOrPlaceholderOrEveryone.describe('Role ID, {{creatorId}} placeholder, or @everyone'),
+    roleId: roleTargetSchema.describe('Role ID, list of role IDs, {{creatorId}} placeholder, or @everyone'),
     allow: z
       .array(permSchema)
       .describe(`Allowed permission names (e.g., "Connect", "Speak", "ViewChannel")`),

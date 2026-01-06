@@ -49,20 +49,23 @@ export async function createVoiceChannel(
     const channelName = config.channelName.replace(/\{creator\}/gi, creatorUsername);
 
     // Build permission overwrites, replacing {{creatorId}} with actual creator
-    const permissionOverwrites = config.channelPermissions.map(perm => {
-      const roleId = perm.roleId === '{{creatorId}}' 
-        ? creatorId 
-        : perm.roleId === '@everyone'
-        ? guild.id
-        : perm.roleId;
-
+    const permissionOverwrites = config.channelPermissions.flatMap(perm => {
+      const targetRoleIds = Array.isArray(perm.roleId) ? perm.roleId : [perm.roleId];
       const { allow, deny } = toDiscordPermissionOverwrite(perm);
 
-      return {
-        id: roleId,
-        allow,
-        deny,
-      };
+      return targetRoleIds.map(roleId => {
+        const resolvedRoleId = roleId === '{{creatorId}}'
+          ? creatorId
+          : roleId === '@everyone'
+          ? guild.id
+          : roleId;
+
+        return {
+          id: resolvedRoleId,
+          allow,
+          deny,
+        };
+      });
     });
 
     // Create the channel

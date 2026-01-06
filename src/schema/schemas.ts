@@ -15,10 +15,6 @@ const createClickToCreateConfigSchema = <T extends z.ZodTypeAny>(permSchema: T) 
     .array(permSchema)
     .min(1)
     .describe('Permission overrides for created channels'),
-  manageRoles: z
-    .array(discordIdSchema)
-    .optional()
-    .describe('Role IDs that can manage created channels (defaults to creator only)'),
 }).describe('Click-to-create configuration');
 
 // Main schema: uses display version (no-transform) - keeps permissions as strings

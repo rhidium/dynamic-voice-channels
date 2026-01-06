@@ -32,11 +32,12 @@ export function validateClickToCreateConfig(config: ClickToCreate): void {
     cfg.channelPermissions.forEach((perm, permIndex) => {
       const allowSet = new Set(perm.allow);
       const denySet = new Set(perm.deny);
+      const roleIdLabel = Array.isArray(perm.roleId) ? perm.roleId.join(', ') : perm.roleId;
       
       const overlaps = Array.from(allowSet).filter(p => denySet.has(p));
       if (overlaps.length > 0) {
         errors.push(
-          `Config[${cfgIndex}].channelPermissions[${permIndex}] (roleId: "${perm.roleId}"): ` +
+          `Config[${cfgIndex}].channelPermissions[${permIndex}] (roleId: "${roleIdLabel}"): ` +
           `Permission(s) "${overlaps.join('", "')}" cannot be in both allow and deny lists`
         );
       }

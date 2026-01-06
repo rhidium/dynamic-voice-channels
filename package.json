@@ -27,6 +27,7 @@
     "db:status": "prisma migrate status",
     "predev": "cd rhidium && pnpm run db:generate",
     "dev": "concurrently -n \"rhidium,app\" -c \"cyan,green\" \"cd rhidium && pnpm run build:watch\" \"wait-on rhidium/dist/index.cjs && tsx watch --clear-screen=false src/index.ts\"",
+    "pregen:schema": "pnpm --filter rhidium run build",
     "gen:schema": "tsx scripts/generate-schema.ts",
     "start": "node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",

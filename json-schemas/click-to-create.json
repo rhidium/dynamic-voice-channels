@@ -46,19 +46,43 @@
             "roleId": {
               "anyOf": [
                 {
-                  "type": "string",
-                  "pattern": "^\\d{18,20}$"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{18,20}$"
+                    },
+                    {
+                      "type": "string",
+                      "const": "{{creatorId}}"
+                    },
+                    {
+                      "type": "string",
+                      "const": "@everyone"
+                    }
+                  ]
                 },
                 {
-                  "type": "string",
-                  "const": "{{creatorId}}"
-                },
-                {
-                  "type": "string",
-                  "const": "@everyone"
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{18,20}$"
+                      },
+                      {
+                        "type": "string",
+                        "const": "{{creatorId}}"
+                      },
+                      {
+                        "type": "string",
+                        "const": "@everyone"
+                      }
+                    ]
+                  }
                 }
               ],
-              "description": "Role ID, {{creatorId}} placeholder, or @everyone"
+              "description": "Role ID, list of role IDs, {{creatorId}} placeholder, or @everyone"
             },
             "allow": {
               "type": "array",
@@ -191,14 +215,6 @@
           "additionalProperties": false
         },
         "description": "Permission overrides for created channels"
-      },
-      "manageRoles": {
-        "description": "Role IDs that can manage created channels (defaults to creator only)",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "pattern": "^\\d{18,20}$"
-        }
       }
     },
     "required": [

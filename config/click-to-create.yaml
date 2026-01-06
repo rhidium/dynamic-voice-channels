@@ -7,9 +7,9 @@
 
 # Note: This configuration is used to test the application, schema generation and validation.
 # You should remove or modify it according to your needs.
-- channelId: "1457366395825164494"
-  categoryId: "1222669266113921116"
-  maxChannels: 1
+- channelId: "868826737881002004"
+  categoryId: "1450594190516813936"
+  maxChannels: 15
   channelName: "{creator}'s Channel"
   channelUserLimit: 0
   channelBitrate: 64000
@@ -40,7 +40,15 @@
         - ManageRoles
       deny: []
     - &staff-channel-perms
-      roleId: "1222899875113472111"
+      roleId:
+        - "1227748659127521360" # Community Manager
+        - "1228124708952608820" # Head Admin
+        - "1112020551817502860" # Administrator
+        - "1228125291293970543" # Administration
+        - "1228124701688205383" # Senior Moderator
+        - "1112020086820184196" # Moderator
+        - "1228125295379480598" # Moderation
+        - "1228125711496249344" # Staff Team
       allow:
         - Connect
         - ViewChannel
