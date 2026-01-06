@@ -1,5 +1,12 @@
 .PHONY: help build up down logs purge restart ps shell
 
+# Note: Requires Docker and Docker Compose to be installed and configured properly.
+# Usage: Run `make <command>` to execute the desired task.
+# Example: `make up` to start the services.
+
+# Additionally, use the `COMPOSE_FILE` and `COMPOSE_PROJECT_NAME` environment variables
+# defined in the .env file to customize the Docker Compose setup.
+
 help:
 	@echo "Available commands:"
 	@echo "  make build      - Build Docker image"
@@ -12,24 +19,24 @@ help:
 	@echo "  make shell      - Open shell in running client container"
 
 build:
-	docker compose -f docker/compose.yaml build
+	docker compose build
 
 up:
-	docker compose -f docker/compose.yaml up -d
+	docker compose up -d
 
 down:
-	docker compose -f docker/compose.yaml down
+	docker compose down
 
 purge: down
-	docker compose -f docker/compose.yaml down --remove-orphans --rmi=all -v
+	docker compose down --remove-orphans --rmi=all -v
 
 logs:
-	docker compose -f docker/compose.yaml logs -f
+	docker compose logs -f
 
 restart: down up
 
 ps:
-	docker compose -f docker/compose.yaml ps
+	docker compose ps
 
 shell:
-	docker compose -f docker/compose.yaml exec client sh
+	docker compose exec client sh
