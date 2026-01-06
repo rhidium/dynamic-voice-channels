@@ -2,6 +2,22 @@
 
 A powerful Discord bot for on-demand voice channel creation, built with the [Rhidium framework](https://github.com/rhidium/rhidium). This bot allows users to create temporary voice channels automatically by joining a configured trigger channel, with full permission controls and customization options.
 
+## Why?
+
+Because pay-walling basic voice-channel creation behind subscriptions is exploitative and unnecessary. This bot keeps that core feature free and in your control.
+
+### **Offenders:**
+
+- [GreedMaster (originally VoiceMaster)](https://voicemaster.xyz/) (£39.99-£199.99 !!!! per year)
+- [TempVoice](https://tempvoice.xyz/premium) (4-6 EUR/month, **recommended** if you cannot host yourself)
+- [Tempy](https://tempybot.me/) (2,99$/month PER USER)
+- [EmptyManager](https://www.patreon.com/Nexgan/membership) (3.50-10 EUR/month)
+- [Auto Voice Channels](https://wiki.dotsbots.com/en/gold-patrons) (3-13.50 EUR/month)
+
+> Why pay for a service when you can just host it yourself? If you feel like something is missing from this free, open-source, alternative - [create a feature request](https://github.com/rhidium/dynamic-voice-channels/issues).
+
+Hosting voice-channel bots *is* expensive — but **only if the bot itself is in the channel consuming bandwidth**. Since this bot purely manages permissions and channel creation, hosting costs are negligible. There's no reasonable justification for charging up to £200+ per year for that functionality.
+
 ## Features
 
 - 🎤 **Click-to-Create Voice Channels** - Users join a trigger channel and automatically get their own private voice channel
