@@ -1,6 +1,6 @@
 networks:
   shared:
-    name: shared_services
+    name: global_services
     external: true
 
 services:
@@ -30,4 +30,4 @@ services:
       - ../prisma:/app/prisma:r
       - ../prisma.config.ts:/app/prisma.config.ts:r
     networks:
-      - shared_services
+      - shared
