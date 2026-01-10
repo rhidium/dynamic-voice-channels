@@ -1,6 +1,7 @@
 import { type GuildMember, type VoiceBasedChannel, type VoiceState } from "discord.js";
 import type { loadClickToCreateConfig } from "../config";
 import type { ClickToCreateConfig } from "../schema/schemas";
+import { prisma } from "./prisma";
 
 const resolveEvent = (oldState: VoiceState, newState: VoiceState) => {
   if (!oldState.channelId && newState.channelId) {
@@ -25,12 +26,12 @@ const resolveChannel = (eventType: string, oldState: VoiceState, newState: Voice
   return null;
 }
 
-const shouldHandleEvent = (
+const shouldHandleEvent = async (
   eventType: string,
   channel: VoiceBasedChannel | null,
   member: GuildMember | null,
   config: ReturnType<typeof loadClickToCreateConfig>,
-): false | ClickToCreateConfig => {
+): Promise<false | ClickToCreateConfig> => {
   if (!member || !channel) {
     return false;
   }
@@ -53,7 +54,9 @@ const shouldHandleEvent = (
     }
 
     if (eventType === 'leave') {
-      if (cfg.channelId !== channel.id && channel.members.size === 0) {
+      if (cfg.channelId !== channel.id && channel.members.size === 0 && !!(
+        await prisma.dynamicVoiceChannel.findFirst({ where: { channelId: channel.id } })
+      )) {
         return cfg;
       }
 

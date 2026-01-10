@@ -86,7 +86,7 @@ const VoiceStateUpdateListener = new ClientEventListener({
     ];
 
     // Determine if we should handle this event, and get the relevant config
-    const cfg = shouldHandleEvent(eventType, channel, member, config);
+    const cfg = await shouldHandleEvent(eventType, channel, member, config);
     if (!cfg) {
       return;
     }
