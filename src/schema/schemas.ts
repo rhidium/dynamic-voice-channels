@@ -15,6 +15,8 @@ const createClickToCreateConfigSchema = <T extends z.ZodTypeAny>(permSchema: T) 
     .array(permSchema)
     .min(1)
     .describe('Permission overrides for created channels'),
+  channelPositionAnchor: discordIdSchema.optional().nullable()
+    .describe('Channel ID to position new channels below; if empty, channels are added at the bottom of the category. Must be in the same category, and must be a voice channel.'),
 }).describe('Click-to-create configuration');
 
 // Main schema: uses display version (no-transform) - keeps permissions as strings

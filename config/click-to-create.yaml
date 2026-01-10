@@ -13,6 +13,7 @@
   channelName: "{creator}'s Channel"
   channelUserLimit: 0
   channelBitrate: 64000
+  channelPositionAnchor: "868826737881002004"
   channelPermissions:
     - &everyone-channel-perms
       roleId: "@everyone"

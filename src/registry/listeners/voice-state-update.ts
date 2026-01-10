@@ -23,9 +23,9 @@ const handleJoin = async (client: Client<true>, member: GuildMember, cfg: ClickT
     // Move the user to their new channel
     try {
       await member.voice.setChannel(channel.id);
-      Logger.info(`Moved ${member.user.tag} to their new voice channel ${channel.id}`);
+      Logger.info(`Moved ${member.user.globalName} to their new voice channel ${channel.id}`);
     } catch (error) {
-      Logger.error(`Failed to move ${member.user.tag} to new channel:`, error);
+      Logger.error(`Failed to move ${member.user.globalName} to new channel:`, error);
       // If we can't move them, delete the channel we just created
       await deleteVoiceChannel(client, channel.id);
     }
@@ -97,7 +97,7 @@ const VoiceStateUpdateListener = new ClientEventListener({
     }
 
     // Log and handle the event
-    Logger.info(`Handling voice state update event: ${eventType} for member ${member.user.tag} in channel ${channel?.id || 'none'}`);
+    Logger.info(`Handling voice state update event: ${eventType} for member ${member.user.globalName} in channel ${channel?.id || 'none'}`);
     switch (eventType) {
       case 'join':
         await handleJoin(client, member, cfg);

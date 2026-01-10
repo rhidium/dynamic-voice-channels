@@ -12,7 +12,7 @@
       "categoryId": {
         "type": "string",
         "pattern": "^\\d{18,20}$",
-        "description": "The category where new VCs will be created"
+        "description": "The category where new VCs will be created. Any voice-channels in this category are considered dynamic channels. When a dynamic channel is empty, it will be deleted."
       },
       "maxChannels": {
         "type": "integer",
@@ -215,6 +215,18 @@
           "additionalProperties": false
         },
         "description": "Permission overrides for created channels"
+      },
+      "channelPositionAnchor": {
+        "anyOf": [
+          {
+            "type": "string",
+            "pattern": "^\\d{18,20}$"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Channel ID to position new channels below; if empty, channels are added at the bottom of the category. Must be in the same category, and must be a voice channel."
       }
     },
     "required": [

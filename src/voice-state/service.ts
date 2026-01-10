@@ -1,9 +1,10 @@
-import { ChannelType, GuildMember, VoiceChannel, type VoiceBasedChannel } from 'discord.js';
+import { ChannelType, GuildMember, VideoQualityMode, VoiceChannel, type VoiceBasedChannel } from 'discord.js';
 import { toDiscordPermissionOverwrite } from '../schema/permissions-utils';
 import { type ClickToCreateConfig } from '../schema/schemas';
 import { Logger } from '../logger';
 import type Client from 'rhidium/core/client';
 import { prisma } from './prisma';
+import { resolveChannelAnchor } from './resolvers';
 
 export async function kickMemberFromChannel(
   member: GuildMember
@@ -81,6 +82,9 @@ export async function createVoiceChannel(
       userLimit: config.channelUserLimit,
       bitrate: config.channelBitrate,
       permissionOverwrites,
+      reason: `Dynamic voice channel created for ${member.user.globalName} (${creatorId})`,
+      videoQualityMode: VideoQualityMode.Full,
+      position: resolveChannelAnchor(guild, config),
     });
 
     // Store in database for persistence
