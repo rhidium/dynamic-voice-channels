@@ -54,7 +54,7 @@ const handleSwitch = async (
   client: Client<true>,
   oldChannel: VoiceBasedChannel,
   member: GuildMember,
-  cfg: ClickToCreateConfig
+  cfg: ClickToCreateConfig | null,
 ) => {
   // Handle leaving the old channel
   await handleLeave(client, oldChannel, member);
@@ -88,6 +88,11 @@ const VoiceStateUpdateListener = new ClientEventListener({
     // Determine if we should handle this event, and get the relevant config
     const cfg = await shouldHandleEvent(eventType, channel, member, config);
     if (!cfg) {
+      // Special case: on switch, still need to check if we should delete the old channel
+      if (eventType === 'switch' && oldState.channel) {
+        await handleLeave(client, oldState.channel, member);
+      }
+
       return;
     }
 
