@@ -51,9 +51,14 @@ export async function createVoiceChannel(
     // Build permission overwrites, replacing {{creatorId}} with actual creator
     const permissionOverwrites = config.channelPermissions.flatMap(perm => {
       const targetRoleIds = Array.isArray(perm.roleId) ? perm.roleId : [perm.roleId];
+      const filteredRoleIds = targetRoleIds.filter(id => guild.roles.cache.has(id) || id === '{{creatorId}}' || id === '@everyone');
       const { allow, deny } = toDiscordPermissionOverwrite(perm);
 
-      return targetRoleIds.map(roleId => {
+      if (targetRoleIds.length !== filteredRoleIds.length) {
+        Logger.warn(`Some role IDs in channelPermissions for trigger ${config.channelId} do not exist in guild ${guild.id} and will be ignored.`);
+      }
+
+      return filteredRoleIds.map(roleId => {
         const resolvedRoleId = roleId === '{{creatorId}}'
           ? creatorId
           : roleId === '@everyone'

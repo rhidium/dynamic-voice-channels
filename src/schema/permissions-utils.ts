@@ -30,7 +30,6 @@ export function toDiscordPermissionOverwrite(permission: {
 
 /**
  * Transform an entire config's permissions to BigInts
- * Call this when you're ready to use the config with Discord API
  */
 export function toDiscordClickToCreateConfig(config: ClickToCreateConfig) {
   return {
