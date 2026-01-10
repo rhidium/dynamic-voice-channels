@@ -21,7 +21,7 @@ Hosting voice-channel bots *is* expensive — but **only if the bot itself is in
 ## Features
 
 - 🎤 **Click-to-Create Voice Channels** - Users join a trigger channel and automatically get their own private voice channel
-- 🔧 **Highly Configurable** - Fine-grained control over channel names, permissions, user limits, and bitrate
+- 🔧 **Highly Configurable** - Fine-grained control over channel names, permissions, user limits, position, etc.
 - 🎯 **YAML-Based Configuration** - Easy-to-read configuration with reusable permission templates
 - 🗄️ **PostgreSQL Database** - Persistent tracking of dynamic channels via Prisma ORM
 - 🐳 **Docker Ready** - Production-ready Docker Compose setup with health checks
