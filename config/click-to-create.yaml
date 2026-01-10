@@ -11,7 +11,7 @@
   categoryId: "1450594190516813936"
   maxChannels: 15
   channelName: "{creator}'s Channel"
-  channelUserLimit: 0
+  channelUserLimit: 5
   channelBitrate: 64000
   channelPositionAnchor: "868826737881002004"
   channelPermissions:
