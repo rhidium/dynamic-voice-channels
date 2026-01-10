@@ -29,7 +29,7 @@ const resolveChannelAnchor = (
     }
   }
 
-  return positionAnchor ? positionAnchor.position + 1 : undefined;
+  return positionAnchor ? positionAnchor.rawPosition + 1 : undefined;
 }
 
 export {

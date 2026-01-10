@@ -84,6 +84,11 @@ export async function createVoiceChannel(
       permissionOverwrites,
       reason: `Dynamic voice channel created for ${member.user.globalName} (${creatorId})`,
       videoQualityMode: VideoQualityMode.Full,
+    });
+
+    // Adjust position based on anchor
+    // Note: Providing position during creation may not work as expected, so we edit after creation
+    await channel.edit({
       position: resolveChannelAnchor(guild, config),
     });
 
