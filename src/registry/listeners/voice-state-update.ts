@@ -2,9 +2,9 @@ import { ClientEventListener } from "rhidium/core/commands/events";
 
 import { loadClickToCreateConfig } from "../../config";
 import { Logger } from "../../logger";
-import { isGuildAvailable, isGuildEvent, resolveChannelId, resolveEvent, shouldHandleEvent } from "../../voice-state/checks";
+import { isGuildAvailable, isGuildEvent, resolveChannel, resolveEvent, shouldHandleEvent } from "../../voice-state/checks";
 import { createVoiceChannel, deleteVoiceChannel, isDynamicChannel, shouldDeleteChannel } from "../../voice-state/service";
-import type { GuildMember } from "discord.js";
+import type { GuildMember, VoiceBasedChannel } from "discord.js";
 import type { ClickToCreateConfig } from "../../schema/schemas";
 import Client from "rhidium/core/client";
 
@@ -32,32 +32,32 @@ const handleJoin = async (client: Client<true>, member: GuildMember, cfg: ClickT
   }
 };
 
-const handleLeave = async (client: Client<true>, channelId: string, member: GuildMember) => {
+const handleLeave = async (client: Client<true>, channel: VoiceBasedChannel, member: GuildMember) => {
   // Check if the channel they left is a dynamic channel
-  if (!await isDynamicChannel(channelId)) {
+  if (!await isDynamicChannel(channel.id)) {
     return;
   }
 
   // Fetch the channel to check if it's empty
-  const channel = await member.guild.channels.fetch(channelId);
-  if (!channel || !channel.isVoiceBased()) {
+  const fetchedChannel = await member.guild.channels.fetch(channel.id);
+  if (!fetchedChannel || !fetchedChannel.isVoiceBased()) {
     return;
   }
 
   // If empty, delete it
   if (shouldDeleteChannel(channel)) {
-    await deleteVoiceChannel(client, channelId);
+    await deleteVoiceChannel(client, channel.id);
   }
 };
 
 const handleSwitch = async (
   client: Client<true>,
-  oldChannelId: string,
+  oldChannel: VoiceBasedChannel,
   member: GuildMember,
   cfg: ClickToCreateConfig
 ) => {
   // Handle leaving the old channel
-  await handleLeave(client, oldChannelId, member);
+  await handleLeave(client, oldChannel, member);
   
   // Handle joining the new channel (if it's a trigger)
   if (cfg) {
@@ -80,34 +80,34 @@ const VoiceStateUpdateListener = new ClientEventListener({
 
     // Resolve event type and relevant channel/member
     const eventType = resolveEvent(oldState, newState);
-    const [channelId, member] = [
-      resolveChannelId(eventType, oldState, newState),
+    const [channel, member] = [
+      resolveChannel(eventType, oldState, newState),
       eventType === 'join' ? newState.member : oldState.member,
     ];
 
     // Determine if we should handle this event, and get the relevant config
-    const cfg = shouldHandleEvent(eventType, channelId, member, config);
+    const cfg = shouldHandleEvent(eventType, channel, member, config);
     if (!cfg) {
       return;
     }
 
     // Log and handle the event
-    Logger.info(`Handling voice state update event: ${eventType} for member ${member.user.tag} in channel ${channelId}`);
+    Logger.info(`Handling voice state update event: ${eventType} for member ${member.user.tag} in channel ${channel?.id || 'none'}`);
     switch (eventType) {
       case 'join':
         await handleJoin(client, member, cfg);
         break;
       case 'leave':
-        if (!channelId) {
+        if (!channel) {
           throw new Error('Channel ID is undefined on leave event');
         }
-        await handleLeave(client, channelId, member);
+        await handleLeave(client, channel, member);
         break;
       case 'switch':
-        if (!oldState.channelId || !newState.channelId) {
+        if (!oldState.channel || !newState.channel) {
           throw new Error('Channel IDs are undefined on switch event');
         }
-        await handleSwitch(client, oldState.channelId, member, cfg);
+        await handleSwitch(client, oldState.channel, member, cfg);
         break;
       case 'state':
       default:

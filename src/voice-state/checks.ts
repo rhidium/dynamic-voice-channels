@@ -1,4 +1,4 @@
-import type { GuildMember, VoiceState } from "discord.js";
+import { type GuildMember, type VoiceBasedChannel, type VoiceState } from "discord.js";
 import type { loadClickToCreateConfig } from "../config";
 import type { ClickToCreateConfig } from "../schema/schemas";
 
@@ -15,26 +15,23 @@ const resolveEvent = (oldState: VoiceState, newState: VoiceState) => {
   return 'state';
 };
 
-const resolveChannelId = (eventType: string, oldState: VoiceState, newState: VoiceState) => {
-  if (eventType === 'join') {
-    return newState.channelId;
+const resolveChannel = (eventType: string, oldState: VoiceState, newState: VoiceState) => {
+  if (eventType === 'join' || eventType === 'switch') {
+    return newState.channel;
   }
   if (eventType === 'leave') {
-    return oldState.channelId;
-  }
-  if (eventType === 'switch') {
-    return newState.channelId;
+    return oldState.channel;
   }
   return null;
 }
 
 const shouldHandleEvent = (
   eventType: string,
-  channelId: string | null,
+  channel: VoiceBasedChannel | null,
   member: GuildMember | null,
   config: ReturnType<typeof loadClickToCreateConfig>,
 ): false | ClickToCreateConfig => {
-  if (!member || !channelId) {
+  if (!member || !channel) {
     return false;
   }
 
@@ -43,10 +40,24 @@ const shouldHandleEvent = (
   }
 
   for (const cfg of config) {
-    if (cfg.channelId === channelId) {
-      if (eventType === 'join' || eventType === 'leave' || eventType === 'switch') {
+    if (eventType === 'state') {
+      return false;
+    }
+
+    if (eventType === 'join' || eventType === 'switch') {
+      if (cfg.channelId === channel.id) {
         return cfg;
       }
+
+      continue;
+    }
+
+    if (eventType === 'leave') {
+      if (cfg.channelId !== channel.id && channel.members.size === 0) {
+        return cfg;
+      }
+
+      continue;
     }
   }
 
@@ -75,7 +86,7 @@ const isGuildAvailable = (state: VoiceState): state is VoiceState & {
 
 export {
   resolveEvent,
-  resolveChannelId,
+  resolveChannel,
   shouldHandleEvent,
   isGuildEvent,
   isGuildAvailable,

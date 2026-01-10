@@ -29,6 +29,8 @@ Hosting voice-channel bots *is* expensive — but **only if the bot itself is in
 - 🔒 **Role-Based Permissions** - Granular control over who can use which features
 - 🧹 **Auto-Cleanup** - Dynamic channels are automatically deleted when empty + reconciliation on boot/restart
 
+> **Note:** By design, any voice-channel (that is not the `channelId`) in configured `categoryId`s will be **deleted** when the last member leaves.
+
 ## Quick Start
 
 ### Prerequisites
