@@ -7,13 +7,13 @@
 
 # Note: This configuration is used to test the application, schema generation and validation.
 # You should remove or modify it according to your needs.
-- channelId: "868826737881002004"
-  categoryId: "1450594190516813936"
+- channelId: "1457366395825164494"
+  categoryId: "1222669266113921116"
   maxChannels: 15
   channelName: "{creator}'s Channel"
   channelUserLimit: 5
   channelBitrate: 64000
-  channelPositionAnchor: "868826737881002004"
+  channelPositionAnchor: "1457366395825164494"
   channelPermissions:
     # Note: Allow base VC permissions for everyone, but deny Connect.
     # That way, once user's join (are moved by creator or staff), they can speak, stream, etc.
