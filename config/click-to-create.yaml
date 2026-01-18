@@ -15,17 +15,24 @@
   channelBitrate: 64000
   channelPositionAnchor: "868826737881002004"
   channelPermissions:
+    # Note: Allow base VC permissions for everyone, but deny Connect.
+    # That way, once user's join (are moved by creator or staff), they can speak, stream, etc.
     - &everyone-channel-perms
       roleId: "@everyone"
       allow:
-        - ViewChannel
-        - UseVAD
-        - Speak
-        - Stream
-        - UseSoundboard
-        - UseExternalSounds
+        - ViewChannel # Everyone can see created channels
+        - UseVAD # Allow voice activity detection
+        - Speak # Allow speaking
+        - Stream # Allow streaming
+        - UseSoundboard # Allow use of soundboard
+        - UseExternalSounds # Allow use of external sounds
+        - SendMessages # Allow anyone to use the voice channel text chat (to request access/moving, etc.)
       deny:
-        - Connect
+        - Connect # Prevent everyone from joining by default
+        - EmbedLinks # Prevent link embedding in channel chat
+        - AttachFiles # Prevent file attachments in channel chat
+        - AddReactions # Prevent reactions in channel chat
+        - ReadMessageHistory # Non-VC members don't need to read history
     - &creator-channel-perms
       roleId: "{{creatorId}}"
       allow:
@@ -36,6 +43,17 @@
         - Stream
         - UseSoundboard
         - UseExternalSounds
+        - SendMessages
+        - EmbedLinks
+        - AttachFiles
+        - AddReactions
+        - ReadMessageHistory
+        - SendVoiceMessages
+        - SendTTSMessages
+        - SendPolls
+        - UseApplicationCommands
+        - UseEmbeddedActivities
+        - UseExternalApps
         - MoveMembers
         - ManageChannels
         - ManageRoles
@@ -58,11 +76,23 @@
         - Stream
         - UseSoundboard
         - UseExternalSounds
+        - SendMessages
+        - EmbedLinks
+        - AttachFiles
+        - AddReactions
+        - ReadMessageHistory
+        - SendVoiceMessages
+        - SendTTSMessages
+        - SendPolls
+        - UseApplicationCommands
+        - UseEmbeddedActivities
+        - UseExternalApps
         - MoveMembers
         - ManageChannels
         - ManageRoles
         - MuteMembers
         - DeafenMembers
+        - ManageMessages
       deny: []
 
 # Example: Reuse the same permission structure in another config
