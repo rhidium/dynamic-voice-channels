@@ -123,6 +123,7 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=your_password_here
 POSTGRES_DB=dynamic-voice-channels
 DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public"
+DIRECT_DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public"
 ```
 
 ### Discord Bot Configuration
@@ -210,6 +211,7 @@ docker compose logs -f database
 ### Database Connection Issues
 
 - Verify `DATABASE_URL` is correctly formatted
+- Make sure `DIRECT_DATABASE_URL` points to your database server directly, no intermediaries.
 - For Docker: use `POSTGRES_HOST=database` (service name)
 - For local: use `POSTGRES_HOST=localhost`
 - Check PostgreSQL is running: `docker compose ps` or `systemctl status postgresql`
