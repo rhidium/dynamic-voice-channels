@@ -112,7 +112,7 @@ git pull && git submodule update --remote --merge
 git submodule update --recursive
 
 # Add new submodules
-git submodule add <repo-url> <directory-name>
+git submodule add -b <branch-name> <repo-url> <directory-name>
 ```
 
 ### Working with Submodules
